@@ -1,23 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Module that defines a function: filter_datum for Task_0"""
 import logging
 import re
 from typing import List
-
-
-class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
-
-    REDACTION = "***"
-    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
-    SEPARATOR = ";"
-
-    def __init__(self):
-        super(RedactingFormatter, self).__init__(self.FORMAT)
-
-    def format(self, record: logging.LogRecord) -> str:
-        NotImplementedError
 
 
 def filter_datum(fields: List[str],
@@ -35,12 +20,9 @@ def filter_datum(fields: List[str],
     Returns:
         Log message as string
     """
-    final_message:str = message
+    final_message: str = message
     for field in fields:
         pattern: str = r"({}=)([^{}]+)".format(field, separator)
         final_message = re.sub(pattern, r"\1" + redaction, final_message)
 
     return final_message
-
-
-
