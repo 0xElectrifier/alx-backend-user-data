@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Module that defines a function: filter_datum for Task_0"""
 import logging
+import mysql.connector
+from os import getenv
 import re
 from typing import List
 
@@ -64,3 +66,18 @@ def get_logger() -> logging.Logger:
     log_obj.addHandler(handler)
 
     return log_obj
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Returns a connector to a database object"""
+    username = getenv("PERSONAL_DATA_DB_USERNAME") or "root"
+    password = getenv("PERSONAL_DATA_DB_PASSWORD") or ""
+    host = getenv("PERSONAL_DATA_DB_HOST") or "localhost"
+    db = getenv("PERSONAL_DATA_DB_NAME")
+    table = "users"
+    conn = mysql.connector.connect(user=user,
+                                   password=password,
+                                   host=host,
+                                   database=db)
+
+    return conn
