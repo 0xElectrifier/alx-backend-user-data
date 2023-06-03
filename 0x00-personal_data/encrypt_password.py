@@ -1,29 +1,15 @@
 #!/usr/bin/env python3
-"""
-Defines a hash_password function to return a hashed password
-"""
+"""Contains password hashing algorithm"""
 import bcrypt
-from bcrypt import hashpw
+from typing import Union
 
 
-def hash_password(password: str) -> bytes:
-    """
-    Returns a hashed password
-    Args:
-        password (str): password to be hashed
-    """
-    b = password.encode()
-    hashed = hashpw(b, bcrypt.gensalt())
-    return hashed
+def hash_password(password: str) -> Union[bytes | None]:
+    """Hashes a password"""
+    if type(password) is not str:
+        return None
+    pw = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed_pw = bcrypt.hashpw(pw, salt)
 
-
-def is_valid(hashed_password: bytes, password: str) -> bool:
-    """
-    Check whether a password is valid
-    Args:
-        hashed_password (bytes): hashed password
-        password (str): password in string
-    Return:
-        bool
-    """
-    return bcrypt.checkpw(password.encode(), hashed_password)
+    return hashed_pw
