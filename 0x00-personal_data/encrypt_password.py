@@ -19,5 +19,5 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
     """Validates @hashed_password with the provided @password"""
     if type(hashed_password) is not bytes or type(password) is not str:
         return False
-    dec_pw = password.encode()
+    dec_pw: bytes = password.encode()
     return bcrypt.checkpw(dec_pw, hashed_password)
