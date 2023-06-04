@@ -13,12 +13,3 @@ def hash_password(password: str) -> Union[bytes | None]:
     hashed_pw: bytes = bcrypt.hashpw(pw, salt)
 
     return hashed_pw
-
-
-def is_valid(hashed_password: bytes, password: str) -> bool:
-    """Validates @hashed_password with the provided @password"""
-    if type(hashed_password) is not bytes or type(password) is not str:
-        return False
-    dec_pw: bytes = password.encode("utf-8")
-    valid_status: bool = bcrypt.checkpw(dec_pw, hashed_password)
-    return valid_status
