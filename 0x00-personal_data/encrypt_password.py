@@ -4,13 +4,11 @@ import bcrypt
 from typing import Union
 
 
-def hash_password(password: str) -> Union[bytes | None]:
+def hash_password(password: str) -> bytes:
     """Hashes a password
     Args:
         password (str): password to be hashed
     """
-    if type(password) is not str:
-        return None
     pw: bytes = password.encode('utf-8')
     hashed_pw: bytes = bcrypt.hashpw(pw, bcrypt.gensalt())
 
