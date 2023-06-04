@@ -9,7 +9,6 @@ def hash_password(password: str) -> Union[bytes | None]:
     if type(password) is not str:
         return None
     pw: bytes = password.encode('utf-8')
-    salt: bytes = bcrypt.gensalt()
-    hashed_pw: bytes = bcrypt.hashpw(pw, salt)
+    hashed_pw: bytes = bcrypt.hashpw(pw, bcrypt.gensalt())
 
     return hashed_pw
