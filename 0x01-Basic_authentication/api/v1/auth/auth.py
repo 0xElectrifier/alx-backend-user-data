@@ -22,7 +22,7 @@ class Auth:
         else:
             slashed_path = path + '/'
 
-        if slashed_path in excluded_paths:
+        if slashed_path not in excluded_paths:
             return True
 
         return False
