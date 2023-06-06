@@ -2,7 +2,7 @@
 """ Module for Authenticaton
 """
 from flask import request
-from typing import (List, TypeVar)
+from typing import List
 
 
 class Auth:
