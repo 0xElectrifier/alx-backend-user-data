@@ -51,12 +51,11 @@ def before_req():
                 '/api/v1/forbidden/'
         ]
         path = request.path
-        if auth.require_auth(path, endpoints):
-            pass
-        if auth.authorization_header(request) is None:
-            abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
+        if not auth.require_auth(path, endpoints):
+            if auth.authorization_header(request) is None:
+                abort(401)
+            if auth.current_user(request) is None:
+                abort(403)
 
 
 if __name__ == "__main__":
