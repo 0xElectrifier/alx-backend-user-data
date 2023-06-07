@@ -8,6 +8,10 @@ from typing import (List, TypeVar)
 class Auth:
     """Authentication class"""
 
+    def __init__(self):
+        """Initialises an 'Auth' instance"""
+        pass
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Returns False
         """
@@ -15,7 +19,6 @@ class Auth:
                 excluded_paths is None or
                 type(excluded_paths) is list and len(excluded_paths) == 0):
             return True
-
         slash_ends_path = path[len(path) - 1:] == '/'
         if slash_ends_path:
             slashed_path = path
@@ -30,7 +33,12 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """ Returns None
         """
-        return None
+        if request is None:
+            return None
+
+        authorization_key = request.headers.get('Authorization', None)
+
+        return authorization_key
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns None
