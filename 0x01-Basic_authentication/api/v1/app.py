@@ -15,7 +15,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = os.getenv('AUTH_TYPE', None)
 if auth:
     from api.v1.auth.auth import Auth
-auth = Auth()
+AUTH = Auth()
 
 
 @app.errorhandler(401)
@@ -42,7 +42,7 @@ def not_found(error) -> str:
 @app.before_request
 def before_req():
     """Filters each request"""
-    if auth is None:
+    if AUTH is None:
         return
     else:
         endpoints = [
@@ -51,10 +51,10 @@ def before_req():
                 '/api/v1/forbidden/'
         ]
         path = request.path
-        if not auth.require_auth(path, endpoints):
-            if auth.authorization_header(request) is None:
+        if not AUTH.require_auth(path, endpoints):
+            if AUTH.authorization_header(request) is None:
                 abort(401)
-            if auth.current_user(request) is None:
+            if AUTH.current_user(request) is None:
                 abort(403)
 
 
