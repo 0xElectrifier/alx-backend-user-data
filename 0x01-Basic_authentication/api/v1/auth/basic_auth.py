@@ -7,12 +7,14 @@ import re
 class BasicAuth(Auth):
     """Basic Authentication Class"""
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
         """
         Returns the Base64 part of @authorization_header for
         a Basic Authentication
         """
-        if authorization_header is None or type(authorization_header) is not str:
+        if (authorization_header is None or
+                type(authorization_header) is not str):
             return None
         auth_type = re.match("^(Basic )(.*)", authorization_header)
         if auth_type is None:
