@@ -13,22 +13,23 @@ class Auth:
         pass
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ Returns False
+        """Checks if @path needs authentication before allowing accessing
         """
         if (path is None or
                 excluded_paths is None or
                 type(excluded_paths) is list and len(excluded_paths) == 0):
             return True
-        slash_ends_path = path[len(path) - 1:] == '/'
-        if slash_ends_path:
-            slashed_path = path
-        else:
-            slashed_path = path + '/'
+        slash_ends_path = path[-1] == '/'
+        if not slash_ends_path:
+            path += '/'
+        for i in excluded_paths:
+            if i[-1] == '*':
+                if path.startswith(i[:-1]):
+                    return False
+            if i == path:
+                return False
 
-        if slashed_path not in excluded_paths:
-            return True
-
-        return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """ Returns None
