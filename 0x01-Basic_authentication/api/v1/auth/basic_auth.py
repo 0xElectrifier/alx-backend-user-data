@@ -37,10 +37,11 @@ class BasicAuth(Auth):
                 type(base64_authorization_header) is not str):
             return None
         try:
-            decoded_auth = base64.b64decode(base64_authorization_header)
+            decoded_auth = base64_authorization_header.encode('utf-8')
+            decoded_auth = base64.b64decode(decoded_auth)
+            return decoded_auth.decode('utf-8')
         except Exception as e:
             return None
-        return decoded_auth.decode('utf-8')
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
@@ -72,3 +73,17 @@ class BasicAuth(Auth):
         if not users[0].is_valid_password(user_pwd):
             return None
         return users[0]
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Overloads 'Auth' and retrieves the 'User' instance for a request
+        """
+        auth_header = self.authorization_header(request)
+        auth_str = self.extract_base64_authorization_header(auth_header)
+        if auth_str is None:
+            return None
+
+        decoded_auth = self.decode_base64_authorization_header(auth_str)
+        user_credentials = self.extract_user_credentials(decoded_auth)
+        if user_credentials is None:
+            return None
+        return self.user_object_from_credentials(*user_credentials)
