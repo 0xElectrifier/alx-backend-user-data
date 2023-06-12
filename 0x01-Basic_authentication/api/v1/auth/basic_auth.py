@@ -53,7 +53,7 @@ class BasicAuth(Auth):
             return None, None
         if ":" not in decoded_base64_authorization_header:
             return None, None
-        auth_info = re.match("^(.*):(.*)$",
+        auth_info = re.match("^([^:]+):(.*)$",
                              decoded_base64_authorization_header)
         return (auth_info.groups())
 
