@@ -2,12 +2,15 @@
 """View for all session authentication related endpoint
 """
 from api.v1.views import app_views
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 
-@app_views("/auth_session/login", method=["POST"], strict_slashes=False)
+@app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
 def log_in():
     """Route for submitting logging data"""
+    from models.user import User
+    import os
+
     email = request.form.get("email")
     password = request.form.get("password")
     if email is None:
