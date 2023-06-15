@@ -45,3 +45,12 @@ class Auth:
         """Returns None
         """
         return None
+
+    def session_cookie(self, request=None):
+        """Returns a cookie value from a request"""
+        if request is None:
+            return None
+        import os
+        COOKIE_NAME = os.getenv("SESSION_NAME")
+
+        return request.cookies.get(COOKIE_NAME)
