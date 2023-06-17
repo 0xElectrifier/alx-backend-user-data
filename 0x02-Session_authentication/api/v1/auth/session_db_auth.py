@@ -38,7 +38,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
         u_sess = u_sess[0].to_json()
 
-        user_id = u_sess.user_id
+        user_id = u_sess.get("user_id")
         if self.session_duration <= 0:
             return user_id
         created_at = u_sess.get("created_at")
