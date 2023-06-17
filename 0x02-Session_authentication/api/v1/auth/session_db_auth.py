@@ -8,6 +8,10 @@ from os import getenv
 class SessionDBAuth(SessionExpAuth):
     """Class for Session Database Authentication"""
 
+    def __init__(self):
+        """Initializes a SessionDBAuth instance"""
+        super().__init__()
+
     def create_session(self, user_id=None):
         """Creates and stores new instance of UserSession and returns
         Args:
