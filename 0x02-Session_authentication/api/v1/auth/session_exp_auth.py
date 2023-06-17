@@ -17,7 +17,6 @@ class SessionExpAuth(SessionAuth):
 
     def create_session(self, user_id=None):
         """Creates a session_id for user with id, @user_id"""
-        from datetime import datetime
         session_id = super().create_session(user_id)
         if session_id is None:
             return None
