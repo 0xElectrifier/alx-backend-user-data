@@ -15,6 +15,8 @@ class SessionDBAuth(SessionExpAuth):
         Returns:
             Session ID
         """
+        if user_id is None:
+            return None
         u_sess = UserSession(user_id=user_id)
         u_sess.save()
         return u_sess.session_id
@@ -24,6 +26,8 @@ class SessionDBAuth(SessionExpAuth):
         Returns the User ID by requesting 'UserSession' in the database
         based on the Session ID from the request cookie
         """
+        if session_id is None:
+            return None
         UserSession.load_from_file()
         u_sess = UserSession.search({"session_id": session_id})
         if u_sess == []:
