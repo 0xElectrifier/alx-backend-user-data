@@ -24,6 +24,7 @@ class SessionDBAuth(SessionExpAuth):
         Returns the User ID by requesting 'UserSession' in the database
         based on the Session ID from the request cookie
         """
+        UserSession.load_from_file()
         u_sess = UserSession.search({"session_id": session_id})
         if u_sess == []:
             return None
