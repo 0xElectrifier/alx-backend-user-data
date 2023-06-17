@@ -45,6 +45,7 @@ class SessionDBAuth(SessionExpAuth):
         created_at = u_sess.get("created_at")
         if created_at is None:
             return None
+        created_at = datetime.strptime(created_at)
         s_duration_td = timedelta(seconds=self.session_duration)
         if (created_at + s_duration_td) < datetime.now():
             return None
