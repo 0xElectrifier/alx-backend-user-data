@@ -41,9 +41,6 @@ class DB:
         """
         from user import User
         u = User(email=email, hashed_password=hashed_password)
-        u.email = email
-        u.hashed_password = hashed_password
-
         self._session.add(u)
         self._session.commit()
 
