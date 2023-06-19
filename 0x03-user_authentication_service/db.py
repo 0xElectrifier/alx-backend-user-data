@@ -46,7 +46,7 @@ class DB:
 
         return u
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Returns the first row found in the 'Users' table as filtered by
         the method's input arguments
         """
@@ -58,3 +58,20 @@ class DB:
             return res
         except InvalidRequestError as e:
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Locates and updates a user with @kwargs passed
+        Args:
+            user_id (int): User ID
+            kwargs (dict): column-value to update user Columns with
+        Returns:
+            None
+        """
+        for k in kwargs.keys():
+            if k not in User.__dict__:
+                raise ValueError
+        usr = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            setattr(usr, k, v)
+
+        self._session.commit()
