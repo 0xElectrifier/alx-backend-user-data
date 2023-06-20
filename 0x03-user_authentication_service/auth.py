@@ -14,6 +14,12 @@ def _hash_password(password: str) -> bytes:
     return h_pw
 
 
+def _generate_uuid():
+    """Returns a string representation of a new UUID"""
+    from uuid import uuid4
+    return str(uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
