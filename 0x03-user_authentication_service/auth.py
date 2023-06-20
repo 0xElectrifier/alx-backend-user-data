@@ -14,7 +14,7 @@ def _hash_password(password: str) -> bytes:
     return h_pw
 
 
-def _generate_uuid():
+def _generate_uuid() -> str:
     """Returns a string representation of a new UUID"""
     from uuid import uuid4
     return str(uuid4())
@@ -52,3 +52,17 @@ class Auth:
             return is_valid
         except NoResultFound:
             return False
+
+    def create_session(self, email: str) -> str:
+        """Creates a session ID and stores it in the DB with
+        the corresponding user with the email, @email
+        """
+        try:
+            user_by_email = self._db.find_user_by(email=email)
+            user_id = user_by_email.id
+            s_id = _generate_uuid()
+            self._db.update_user(user_id, session_id=s_id)
+
+            return s_id
+        except NoResultFound:
+            return None
