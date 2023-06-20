@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Basic Flask app"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/", strict_slashes=False)
 def get_root():
     """Returns a simple json message"""
-    jsonify({"message": "Bienvenue"})
+    jsonify({"message": "Bienvenue"}), 200
 
 
 if __name__ == "__main__":
