@@ -68,7 +68,7 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> Union[User | NOne]:
+    def get_user_from_session_id(self, session_id: str) -> Union[User | None]:
         """Returns the 'User' object with the corresponding @session_id"""
         try:
             user_by_sess_id = self._db.find_user_by(session_id=session_id)
