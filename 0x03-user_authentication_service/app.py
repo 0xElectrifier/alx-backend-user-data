@@ -66,5 +66,17 @@ def profile():
     return jsonify({"email": user.email}), 200
 
 
+@app.route("/reset_password", strict_slashes=False)
+def get_reset_password_token():
+    """Return token needed for password reset as JSON"""
+    email = request.form.get("email")
+    try:
+        r_token = AUTH.get_reset_password_token(email)
+    except ValueError:
+        abort(403)
+
+    return jsonify({"email": email, "reset_token": r_token})
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
