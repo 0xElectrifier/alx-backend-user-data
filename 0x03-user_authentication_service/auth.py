@@ -79,3 +79,10 @@ class Auth:
         except NoResultFound:
             return None
         return user_by_sess_id
+
+    def destroy_session(self, user_id: int) -> None:
+        """Deletes the 'session_id' value/column of the
+        'User' instance with @user_id
+        """
+        AUTH.update_user(user_id, session_id=None)
+        return None

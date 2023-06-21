@@ -70,7 +70,10 @@ class DB:
         for k in kwargs.keys():
             if k not in User.__dict__:
                 raise ValueError
-        usr = self.find_user_by(id=user_id)
+        try:
+            usr = self.find_user_by(id=user_id)
+        except NoResultFound:
+            return None
         for k, v in kwargs.items():
             setattr(usr, k, v)
 
