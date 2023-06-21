@@ -76,7 +76,7 @@ class Auth:
             session_id (str): session id for user
         Return:
             user object if found, else None
-        """
+
         if session_id is None:
             return None
 
@@ -86,15 +86,14 @@ class Auth:
             return None
 
         return user
-
     """
+
     def get_user_from_session_id(self, session_id: str) -> Union[User | None]:
-        ""Returns the 'User' object with the corresponding @session_id""
+        """Returns the 'User' object with the corresponding @session_id"""
         if session_id is None:
             return None
         try:
             user_by_sess_id = self._db.find_user_by(session_id=session_id)
-            return user_by_sess_id
         except NoResultFound:
             return None
-    """
+        return user_by_sess_id
