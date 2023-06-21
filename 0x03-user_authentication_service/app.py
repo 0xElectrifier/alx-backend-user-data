@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Basic Flask app"""
-from flask import abort, Flask, jsonify, request
+from flask import abort, Flask, jsonify, redirect, request
 from auth import Auth
 
 app = Flask(__name__)
@@ -40,6 +40,20 @@ def login():
     resp.set_cookie("session_id", sess_id)
 
     return resp
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout():
+    """Log out function"""
+    from sqlalchemy.orm.exc import NoResultFound
+
+    sess_id = request.cookies.get("session_id")
+    try:
+        if sess_id:
+            AUTH.destroy_session(sess_id)
+            redirect("/")
+    except NoResultFound:
+        abort(403)
 
 
 if __name__ == "__main__":
