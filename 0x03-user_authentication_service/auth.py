@@ -84,8 +84,4 @@ class Auth:
         """Deletes the 'session_id' value/column of the
         'User' instance with @user_id
         """
-        try:
-            self._db.update_user(user_id, session_id=None)
-        except NoResultFound:
-            pass
-        return None
+        self._db.update_user(user_id, session_id=None)
