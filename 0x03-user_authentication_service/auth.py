@@ -3,8 +3,10 @@
 from bcrypt import checkpw, hashpw, gensalt
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
-from typing import Union
+from typing import TypeVar, Union
 from user import User
+
+U = TypeVar(User)
 
 
 def _hash_password(password: str) -> bytes:
@@ -68,7 +70,7 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> Union[None, User]:
+    def get_user_from_session_id(self, session_id: str) -> Union[None, U]:
         """Returns the 'User' object with the corresponding @session_id"""
         if type(session_id) is not str:
             return None
