@@ -85,3 +85,14 @@ class Auth:
         'User' instance with @user_id
         """
         self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self, email: str) -> str:
+        """Initiates the password recovery phase by updating the 'reset_token'
+        field of an exist 'User' with a unique UUID generated
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            r_token = _generate_uuid()
+            self._db.update_user(user.id, reset_token=r_token)
+        except NoResultFound:
+            raise ValueError
