@@ -48,12 +48,12 @@ def logout():
     from sqlalchemy.orm.exc import NoResultFound
 
     sess_id = request.cookies.get("session_id")
-    try:
-        if sess_id:
-            AUTH.destroy_session(sess_id)
-            redirect("/")
-    except NoResultFound:
+    user = AUTH.get_user_from_session_id(sess_id)
+    if not user:
         abort(403)
+
+    AUTH.destroy_session(sess_id)
+    return redirect("/")
 
 
 if __name__ == "__main__":
